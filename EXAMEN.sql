@@ -55,5 +55,9 @@ LEFT JOIN pedidos pd ON pd.id_cliente=c.id;
 
 -- 4. Consulta de pedidos entregados en un rango de fechas
 
-SELECT * FROM pedidos WHERE p.fecha_hora BETWEEN '2025-12-01' AND '2025-12-06';
+SELECT p.id, p.fecha_hora, p.estado, p.total, c.id AS id_cliente FROM pedidos p
+LEFT JOIN cliente c ON c.id = p.id_cliente WHERE p.estado = 'entregado' AND p.fecha_hora BETWEEN '2025-12-01' AND '2025-12-06';
 
+-- 6. Consulta de clientes frecuentes
+
+SELECT c.id, p.nombre, COUNT(pd.id) AS total_pedidos FROM cliente c LEFT JOIN persona p ON p.id= c.id LEFT JOIN pedidos pd ON pd.id_cliente=c.id GROUP BY c.id;
